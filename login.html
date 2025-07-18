@@ -3,6 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <title>Login with LINE</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+    button {
+      background-color: #06C755;
+      color: white;
+      font-size: 20px;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    button:hover {
+      background-color: #05a94f;
+    }
+  </style>
 </head>
 <body>
   <h2>เข้าสู่ระบบด้วย LINE ก่อนกรอกแบบฟอร์ม</h2>
@@ -16,7 +36,6 @@
       const scope = 'profile openid';
 
       const loginUrl = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=${state}&scope=${scope}`;
-
       window.location.href = loginUrl;
     }
   </script>
