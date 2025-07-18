@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Login with LINE</title>
+</head>
+<body>
+  <h2>เข้าสู่ระบบด้วย LINE ก่อนกรอกแบบฟอร์ม</h2>
+  <button onclick="loginWithLINE()">เข้าสู่ระบบด้วย LINE</button>
+
+  <script>
+    function loginWithLINE() {
+      const clientId = 'U00382134e3a831de33b77856b02b8d9a';
+      const redirectUri = 'https://yourdomain.com/callback.html';
+      const state = Math.random().toString(36).substring(7);
+      const scope = 'profile openid';
+
+      const loginUrl = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&state=${state}&scope=${scope}`;
+
+      window.location.href = loginUrl;
+    }
+  </script>
+</body>
+</html>
