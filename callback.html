@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
+</head>
+<body>
+  <p>กำลังเข้าสู่ระบบ กรุณารอสักครู่...</p>
+
+  <script>
+    const code = new URLSearchParams(window.location.search).get('code');
+
+    const client_id = '2007408167'; // Channel ID ของคุณ
+    const client_secret = 'e66fdb1ea085398114ad0c639ca4a5a9'; // 🔐 ต้องใส่ของจริง
+    const redirect_uri = 'https://trongjaitutor.github.io/line-login-form/callback.html';
+
+    fetch('https://api.line.me/oauth2/v2.1/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        grant_type: 'authorization_code',
+        code: code,
+        redirect_uri: redirect_uri,
+        client_id: client_id,
+        client_secret: client_secret
+      })
+    })
+    .then(res => res.json())
+    .then(tokenData => {
+      const access_token = tokenData.access_token;
+      return fetch('https://api.line.me/v2/profile', {
+        headers: {
+          Authorization: 'Bearer ' + access_token
+        }
+      });
+    })
+    .then(res => res.json())
+    .then(profile => {
+      const userId = profile.userId;
+      // 🔄 เปลี่ยน FORM_ID และ entry.123456 เป็นของจริง
+      const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdMvOjeHzPJT1QDoXW76yhjcGYmzoO8kTSJPuNSAQLOD5gtew/viewform?usp=pp_url&entry.1846268970=${userId}`;
+      window.location.href = formUrl;
+    })
+    .catch(error => {
+      console.error('เกิดข้อผิดพลาด:', error);
+      document.body.innerHTML = '<p>เกิดข้อผิดพลาดในการเข้าสู่ระบบ กรุณาลองใหม่</p>';
+    });
+  </script>
+</body>
+</html>
